@@ -17,16 +17,21 @@ prefs = {
 }
 chrome_options.add_experimental_option("prefs", prefs)
 
+
 PATH = r"C:\Windows\chromedriver.exe" 
 service = Service(executable_path=PATH)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 driver.get("https://www.amazon.in")
 driver.maximize_window()
+
+
 search_box = driver.find_element(By.ID, "twotabsearchtextbox")
 search_box.clear()
 search_box.send_keys("dell laptops")
 driver.find_element(By.ID, "nav-search-submit-button").click()
 time.sleep(2)
+
+
 try:
     dell_filter = driver.find_element(By.XPATH, "//span[text()='Dell']")
     dell_filter.click()
@@ -48,14 +53,12 @@ for laptop in laptops:
         name = "N/A"
     laptop_name.append(name)
 
-    
     try:
         price = laptop.find_element(By.XPATH, ".//span[@class='a-price-whole']").text
     except:
         price = "0"
     laptop_price.append(price)
-
-    
+ 
     try:
         reviews = laptop.find_element(By.XPATH, ".//span[@class='a-size-base s-underline-text']").text
     except:
